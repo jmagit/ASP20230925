@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Primera demo";
+    var nombre = "MUNDO";
+}
+
+<h2>Hola @nombre</h2>
+@if(ViewBag.despide) {
+    <h2>Adios @ViewBag.nombre</h2>
+} else {
+    <h2>Hola @ViewBag.nombre</h2>
+}
+
+
+<ul class="pagination">
+    @foreach(var n in ViewBag.lista) {
+        <li class="page-item"><a class="page-link" href="#">@n.ToUpper()</a></li>
+    }
+</ul>
