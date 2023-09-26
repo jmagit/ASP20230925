@@ -5,6 +5,7 @@
 }
 
 <h2>Hola @nombre</h2>
+<p>Hola @Html.Raw(nombre)</p>
 @if(ViewBag.despide) {
     <h2>Adios @ViewBag.nombre</h2>
 } else {
