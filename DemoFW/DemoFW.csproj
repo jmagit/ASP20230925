@@ -343,7 +343,7 @@
     <Content Include="Views\Personas\List.cshtml">
       <BrowseToURL>~/Views/Personas/List.cshtml</BrowseToURL>
     </Content>
-    <Content Include="Views\Demos\listados.cshtml" />
+    <Content Include="Views\Demos\Listados.cshtml" />
     <Content Include="Views\MisRutas\listados.cshtml" />
     <Content Include="Views\Clientes\Create.cshtml" />
     <Content Include="Views\Clientes\Delete.cshtml" />

@@ -11,6 +11,18 @@ namespace DemoFW {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapMvcAttributeRoutes();
+            routes.MapRoute(
+                name: "demo",
+                url: "informe/{idioma}/{año}",
+                defaults: new {
+                    controller = "Demos", action = "Listados",
+                    idioma = "es-es", año = DateTime.Now.Year.ToString()
+                },
+                constraints: new {
+                    idioma = "[a-z]{2}-[a-z]{2}", año = @"\d{4}"
+                    //httpMethod = "GET"
+                }
+                );
 
             routes.MapRoute(
                 name: "Default1",
@@ -23,18 +35,6 @@ namespace DemoFW {
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-            routes.MapRoute(
-                name: "Informes",
-                url: "informe/{idioma}/{año}",
-                defaults: new {
-                    controller = "Demos", action = "listados",
-                    idioma = "es-es", año = DateTime.Now.Year.ToString()
-                }
-                //constraints: new {
-                //    idioma = "[a-z]{2}-[a-z]{2}", año = @"\d{2,4}",
-                //    httpMethod = "GET"
-                //}
-                );
         }
     }
 }

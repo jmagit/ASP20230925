@@ -37,7 +37,7 @@ namespace DemoFW.Controllers {
             return this.Json(ViewData);
         }
 
-        public ActionResult listados(string idioma, int año) {
+        public ActionResult Listados(string idioma = "es", int año = 2000) {
             //try {
             //int i = año / 0;
             //} catch {
@@ -51,7 +51,11 @@ namespace DemoFW.Controllers {
         }
 
         protected override void OnException(ExceptionContext filterContext) {
-            base.OnException(filterContext);
+            filterContext.Result = new ViewResult() {
+                ViewName = "Error"
+            };
+            filterContext.ExceptionHandled = true;
+            //base.OnException(filterContext);
         }
     }
 }
