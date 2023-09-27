@@ -55,6 +55,13 @@ namespace DemoFW.Controllers {
             return View("../Home/About");
         }
 
+        [ChildActionOnly]
+        public ActionResult ParteDeLaVista() {
+            ViewBag.Message = "Desde la parte de la vista.";
+
+            return PartialView("_parte");
+        }
+
         protected override void OnException(ExceptionContext filterContext) {
             filterContext.Result = new ViewResult() {
                 ViewName = "Error"

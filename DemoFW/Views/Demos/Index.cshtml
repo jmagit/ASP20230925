@@ -3,7 +3,7 @@
     ViewBag.Title = "Primera demo";
     var nombre = "MUNDO";
 }
-
+@Html.Partial("_titulo")
 <h2>Hola @nombre</h2>
 <p>Hola @Html.Raw(nombre)</p>
 @if(ViewBag.despide) {
@@ -12,9 +12,21 @@
     <h2>Hola @ViewBag.nombre</h2>
 }
 
+<output id="ejemplo">Nada</output>
 
 <ul class="pagination">
     @foreach(var n in ViewBag.lista) {
         <li class="page-item"><a class="page-link" href="#">@n.ToUpper()</a></li>
     }
 </ul>
+
+@Html.Action("ParteDeLaVista")
+
+@section pie {
+    <h1>Este es el pie de Demos</h1>
+}
+@section Scripts {
+    <script>
+        $("#ejemplo").text("Desde JavaScript");
+    </script>
+}
