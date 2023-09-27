@@ -124,6 +124,13 @@
 
     </dl>
 </div>
+<h2>Direcciones</h2>
+<ul>
+    @foreach(var item in Model.CustomerAddresses) {
+        <li>@item.Address.City</li>
+
+    }
+</ul>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerID }) |
     @Html.ActionLink("Back to List", "Index")

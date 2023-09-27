@@ -49,6 +49,11 @@ namespace DemoFW.Controllers {
             ViewData["año"] = año;
             return View();
         }
+        public ActionResult About() {
+            ViewBag.Message = "Desde demos.";
+
+            return View("../Home/About");
+        }
 
         protected override void OnException(ExceptionContext filterContext) {
             filterContext.Result = new ViewResult() {

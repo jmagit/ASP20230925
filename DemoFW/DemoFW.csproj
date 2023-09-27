@@ -215,6 +215,7 @@
     <Compile Include="Models\Customer.cs">
       <DependentUpon>AW.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Customer.partial.cs" />
     <Compile Include="Models\CustomerAddress.cs">
       <DependentUpon>AW.tt</DependentUpon>
     </Compile>
@@ -388,6 +389,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Demos.Domains\Demos.Domains.csproj">
+      <Project>{e00219a0-c9f3-4cb9-bb96-c7698c477ba8}</Project>
+      <Name>Demos.Domains</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
