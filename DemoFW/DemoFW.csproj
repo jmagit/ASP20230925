@@ -184,6 +184,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\privado\privadoAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\DemosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -353,7 +355,7 @@
     <Content Include="Views\Clientes\Delete.cshtml" />
     <Content Include="Views\Clientes\Details.cshtml" />
     <Content Include="Views\Clientes\Edit.cshtml" />
-    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Clientes\Index - jqGrid.cshtml" />
     <Content Include="Views\Demos\_titulo.cshtml" />
     <Content Include="Views\Demos\_parte.cshtml" />
     <Content Include="Views\Clientes\DisplayTemplates\Customer.cshtml" />
@@ -361,7 +363,8 @@
     <Content Include="Views\Clientes\Index - Server.cshtml" />
     <Content Include="Views\Clientes\_list.cshtml" />
     <Content Include="Views\Clientes\Index - AjaxHelper.cshtml" />
-    <Content Include="Views\Clientes\Index - Ajax.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Categoria\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

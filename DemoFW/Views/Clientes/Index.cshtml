@@ -9,38 +9,36 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table id="jqGrid"></table>
-<div id="jqGridPager"></div>
-
-@section estilos {
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/free-jqgrid@4.15.5/css/ui.jqgrid.min.css">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-}
+<div id="ajaxRslt">
+</div>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @for(int i = 0; i < ViewBag.numPages; i++) {
+            <li class="page-item">
+                <input type="button" value="@(i + 1)" class="page-link" />
+            </li>
+        }
+    </ul>
+</nav>
 
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/free-jqgrid@4.15.5/js/jquery.jqgrid.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-
-            $("#jqGrid").jqGrid({
-                url: '/Clientes/datos?size=200',
-                mtype: "GET",
-                styleUI: 'Bootstrap',
-                datatype: "json",
-                colModel: [
-                    { label: 'ID', name: 'id', key: true, width: 75 },
-                    { label: 'Nombre', name: 'nombre', width: 150 },
-                    { label: 'Apellidos', name: 'apellidos', width: 150 },
-                ],
-                viewrecords: true,
-                height: 250,
-                width: 780,
-                rowNum: 20,
-                pager: "#jqGridPager"
-            });
-        });
+        const traePagina = (num) => {
+            fetch(`/Clientes/datos?page=${num}&size=@ViewBag.size`)
+                .then(data => data.json().then(
+                    listado => {
+                        let cad = '<ul>'
+                        for (let e of listado) {
+                            cad += `<li><a href='/Clientes/Details/${e.id}'>${e.nombre} ${e.apellidos}</a></li>`
+                        }
+                        cad += '</ul>'
+                        $("#ajaxRslt").html(cad)
+                    }
+                )
+            )
+        }
+        $('.page-link').click(ev => traePagina(+ev.target.value - 1))
+        traePagina(@ViewBag.page)
     </script>
 
 }

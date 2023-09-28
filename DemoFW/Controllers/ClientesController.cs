@@ -16,7 +16,8 @@ namespace DemoFW.Controllers {
         public ActionResult Index(int page = 0, int size = 20) {
             ViewBag.page = page;
             ViewBag.size = size;
-            ViewBag.numPages = Math.Ceiling((double)db.Customers.Count() / size);
+            ViewBag.numRows = (double)db.Customers.Count();
+            ViewBag.numPages = Math.Ceiling((double)ViewBag.numRows / size);
             return View();
 //            return View(db.Customers.OrderBy(m => m.FirstName + m.MiddleName + m.LastName).Skip(page * size).Take(size).ToList());
         }
@@ -27,7 +28,6 @@ namespace DemoFW.Controllers {
             ViewBag.size = size;
             return PartialView("_list", db.Customers.OrderBy(m => m.FirstName + m.MiddleName + m.LastName).Skip(page * size).Take(size).ToList());
         }
-        // GET: Clientes
         public ActionResult Datos(int page = 0, int size = 20) {
             ViewBag.page = page;
             ViewBag.size = size;
@@ -36,6 +36,10 @@ namespace DemoFW.Controllers {
                 .Select(e => new { id = e.CustomerID, nombre = e.FirstName, apellidos= e.LastName })
                 .ToList();
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Grid(int page = 0, int rows = 20) {
+            return Datos(page, rows);
         }
 
         // GET: Clientes/Details/5

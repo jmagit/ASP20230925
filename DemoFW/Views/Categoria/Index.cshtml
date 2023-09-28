@@ -1,5 +1,4 @@
-﻿@model IEnumerable<DemoFW.Models.Customer>
-
+﻿
 @{
     ViewBag.Title = "Index";
 }
@@ -24,14 +23,24 @@
 @section Scripts {
     <script type="text/javascript">
         const traePagina = (num) => {
-            fetch(`/Clientes/datos?page=${num}&size=@ViewBag.size`)
+            fetch(`/api/categorias?page=${num}&size=@ViewBag.size`)
                 .then(data => data.json().then(
                     listado => {
                         let cad = '<ul>'
                         for (let e of listado) {
-                            cad += `<li><a href='/Clientes/Details/${e.id}'>${e.nombre} ${e.apellidos}</a></li>`
+                            cad += `<li><a href='#' onClick='traeElement(${e.ProductCategoryID})'>${e.Name}</a></li>`
                         }
                         cad += '</ul>'
+                        $("#ajaxRslt").html(cad)
+                    }
+                )
+            )
+        }
+        const traeElement = (id) => {
+            fetch(`/api/categorias/${id}`)
+                .then(data => data.json().then(
+                    ele => {
+                        let cad = `<p>${ele.ProductCategoryID }: ${ele.Name}</p`
                         $("#ajaxRslt").html(cad)
                     }
                 )
@@ -42,3 +51,4 @@
     </script>
 
 }
+
