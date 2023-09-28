@@ -1,12 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Demos</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("estilos", required: false)
 
 </head>
 <body>
@@ -31,6 +32,11 @@
         </div>
     </nav>
     <main class="container-fluid body-content">
+        <div id="ajaxWait" style="display: none">
+            <div class="ajax-wait"></div>
+            <div class="loader"></div>
+            @*<img class="img-ajax-wait" src="~/Images/loading.gif">*@
+        </div>
         @RenderBody()
     </main>
     <footer>

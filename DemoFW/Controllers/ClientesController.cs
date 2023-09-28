@@ -13,11 +13,29 @@ namespace DemoFW.Controllers {
         private AWEntities db = new AWEntities();
 
         // GET: Clientes
-        public ActionResult Index(int page = 0, int size = 40) {
+        public ActionResult Index(int page = 0, int size = 20) {
             ViewBag.page = page;
             ViewBag.size = size;
             ViewBag.numPages = Math.Ceiling((double)db.Customers.Count() / size);
-            return View(db.Customers.OrderBy(m => m.FirstName + m.MiddleName + m.LastName).Skip(page * size).Take(size).ToList());
+            return View();
+//            return View(db.Customers.OrderBy(m => m.FirstName + m.MiddleName + m.LastName).Skip(page * size).Take(size).ToList());
+        }
+
+        // GET: Clientes
+        public ActionResult List(int page = 0, int size = 20) {
+            ViewBag.page = page;
+            ViewBag.size = size;
+            return PartialView("_list", db.Customers.OrderBy(m => m.FirstName + m.MiddleName + m.LastName).Skip(page * size).Take(size).ToList());
+        }
+        // GET: Clientes
+        public ActionResult Datos(int page = 0, int size = 20) {
+            ViewBag.page = page;
+            ViewBag.size = size;
+            var data = db.Customers.OrderBy(m => m.FirstName + m.MiddleName + m.LastName)
+                .Skip(page * size).Take(size)
+                .Select(e => new { id = e.CustomerID, nombre = e.FirstName, apellidos= e.LastName })
+                .ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Clientes/Details/5

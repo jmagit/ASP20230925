@@ -1,0 +1,42 @@
+﻿@model IEnumerable<DemoFW.Models.Customer>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NameStyle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach(var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameStyle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.ActionLink($"{item.FirstName} {(item.MiddleName != null ? (item.MiddleName + " ") : "")}{item.LastName}", "Details", new { id = item.CustomerID })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.CustomerID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.CustomerID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CustomerID })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<DemoFW.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NameStyle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach(var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameStyle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.ActionLink($"{item.FirstName} {(item.MiddleName != null ? (item.MiddleName + " ") : "")}{item.LastName}", "Details", new { id = item.CustomerID })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.CustomerID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.CustomerID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CustomerID })
+            </td>
+        </tr>
+    }
+
+</table>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @for(int i = 0; i < ViewBag.numPages; i++) {
+            <li class="page-item">@Html.ActionLink((i + 1).ToString(), "Index", new { page = i, size = ViewBag.size }, htmlAttributes: new { @class = "page-link" })</li>
+        }
+    </ul>
+</nav>

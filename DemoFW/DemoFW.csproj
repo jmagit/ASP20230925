@@ -267,6 +267,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\loading.gif" />
     <Content Include="Models\AW.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>AW.edmx</DependentUpon>
@@ -297,6 +298,8 @@
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -355,6 +358,10 @@
     <Content Include="Views\Demos\_parte.cshtml" />
     <Content Include="Views\Clientes\DisplayTemplates\Customer.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Password.cshtml" />
+    <Content Include="Views\Clientes\Index - Server.cshtml" />
+    <Content Include="Views\Clientes\_list.cshtml" />
+    <Content Include="Views\Clientes\Index - AjaxHelper.cshtml" />
+    <Content Include="Views\Clientes\Index - Ajax.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
