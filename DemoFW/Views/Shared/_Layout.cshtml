@@ -24,9 +24,13 @@
                     <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Demos", "Index", "Demos", new { area = "" }, new { @class = "nav-link", role = "nav" })</li>
-                    <li>@Html.ActionLink("Personas", "Index", "Personas", new { area = "" }, new { @class = "nav-link", role = "nav" })</li>
+                    @if(Request.IsAuthenticated) {
+                        <li>@Html.ActionLink("Personas", "Index", "Personas", new { area = "" }, new { @class = "nav-link", role = "nav" })</li>
+                    }
                     <li>@Html.ActionLink("Clientes", "Index", "Clientes", new { area = "" }, new { @class = "nav-link", role = "nav" })</li>
-                    <li>@Html.ActionLink("Categorias", "Index", "Categoria", new { area = "" }, new { @class = "nav-link", role = "nav" })</li>
+                    @if(User.IsInRole("admin")) {
+                        <li>@Html.ActionLink("Categorias", "Index", "Categoria", new { area = "" }, new { @class = "nav-link", role = "nav" })</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -9,10 +9,13 @@ using System.Web.Mvc;
 using DemoFW.Models;
 
 namespace DemoFW.Controllers {
+    [Authorize]
+
     public class ClientesController : Controller {
         private AWEntities db = new AWEntities();
 
         // GET: Clientes
+        [AllowAnonymous]
         public ActionResult Index(int page = 0, int size = 20) {
             ViewBag.page = page;
             ViewBag.size = size;
@@ -23,11 +26,13 @@ namespace DemoFW.Controllers {
         }
 
         // GET: Clientes
+        [AllowAnonymous]
         public ActionResult List(int page = 0, int size = 20) {
             ViewBag.page = page;
             ViewBag.size = size;
             return PartialView("_list", db.Customers.OrderBy(m => m.FirstName + m.MiddleName + m.LastName).Skip(page * size).Take(size).ToList());
         }
+        [AllowAnonymous]
         public ActionResult Datos(int page = 0, int size = 20) {
             ViewBag.page = page;
             ViewBag.size = size;
@@ -38,11 +43,13 @@ namespace DemoFW.Controllers {
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        [AllowAnonymous]
         public ActionResult Grid(int page = 0, int rows = 20) {
             return Datos(page, rows);
         }
 
         // GET: Clientes/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id) {
             if(id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

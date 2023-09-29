@@ -26,6 +26,7 @@ namespace DemoFW.Controllers {
         }
 
     }
+    [Authorize(Roles = "admin")]
     public class CategoriasController : ApiController {
         private AWEntities db = new AWEntities();
 

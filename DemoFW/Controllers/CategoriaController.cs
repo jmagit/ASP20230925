@@ -8,6 +8,7 @@ using System.Web.UI;
 
 namespace DemoFW.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class CategoriaController : Controller
     {
         // GET: Categoria
