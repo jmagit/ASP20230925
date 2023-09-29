@@ -3,51 +3,144 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<div id="ajaxRslt">
+<h2>Categorías</h2>
+<div class="container">
+    <p>
+        <button id="btnAdd" type="button" class="btn btn-link">Nuevo</button>
+    </p>
+    <div id="ajaxRslt">
+    </div>
+    <nav id="btnsPager" aria-label="Page navigation">
+        <ul class="pagination">
+            @for(int i = 0; i < ViewBag.numPages + 1; i++) {
+                <li class="page-item">
+                    <input type="button" value="@(i + 1)" class="page-link" />
+                </li>
+            }
+        </ul>
+    </nav>
 </div>
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        @for(int i = 0; i < ViewBag.numPages; i++) {
-            <li class="page-item">
-                <input type="button" value="@(i + 1)" class="page-link" />
-            </li>
-        }
-    </ul>
-</nav>
-
 @section Scripts {
     <script type="text/javascript">
+        let pagina = 0
+        let idElemento = null
+        let modo = 'list'
+        let elemento = { ProductCategoryID: 0, Name: '' }
         const traePagina = (num) => {
+            pagina = num
             fetch(`/api/categorias?page=${num}&size=@ViewBag.size`)
                 .then(data => data.json().then(
                     listado => {
-                        let cad = '<ul>'
+                        let ul = $('<ul></ul>')
+
                         for (let e of listado) {
-                            cad += `<li><a href='#' onClick='traeElement(${e.ProductCategoryID})'>${e.Name}</a></li>`
+                            let li = $('<li></li>')
+                            $(`<a href='#'>${e.Name}</a>`)
+                                .on({ click: ev => verElement(ev, e.ProductCategoryID) })
+                                .appendTo(li)
+                            $(`<span>&nbsp;|&nbsp;</span>`).appendTo(li)
+                            $(`<a href='#'>Editar</a>`)
+                                .on({ click: ev => editElement(ev, e.ProductCategoryID) })
+                                .appendTo(li)
+                            $(`<span>&nbsp;|&nbsp;</span>`).appendTo(li)
+                            $(`<a href='#'>Borrar</a>`)
+                                .on({ click: ev => deleteElement(ev, e.ProductCategoryID) })
+                                .appendTo(li)
+                            ul.append(li)
                         }
-                        cad += '</ul>'
-                        $("#ajaxRslt").html(cad)
+                        $("#ajaxRslt").html(ul)
+                        muestraBotones()
                     }
                 )
             )
         }
-        const traeElement = (id) => {
+        const verElement = (ev, id) => {
+            ev.preventDefault()
             fetch(`/api/categorias/${id}`)
                 .then(data => data.json().then(
                     ele => {
-                        let cad = `<p>${ele.ProductCategoryID }: ${ele.Name}</p`
-                        $("#ajaxRslt").html(cad)
+                        let dl = $('<dl></dl>')
+                        dl.addClass('dl-horizontal')
+                        $(`<dt>id</dt>`).appendTo(dl)
+                        $(`<dd>${ele.ProductCategoryID}</dd>`).appendTo(dl)
+                        $(`<dt>nombre</dt>`).appendTo(dl)
+                        $(`<dd>${ele.Name}</dd>`).appendTo(dl)
+                        let btn = $('<button type="button" class="btn btn-link">Volver</button>')
+                            .on({ click: () => traePagina(pagina) })
+                        $("#ajaxRslt").empty()
+                        $("#ajaxRslt").append(dl)
+                        $("#ajaxRslt").append($('<p></p>').append(btn))
+                        ocultaBotones()
+                    //    let cad = `<p>${ele.ProductCategoryID }: ${ele.Name}</p`
+                    //    $("#ajaxRslt").html(cad)
                     }
                 )
             )
         }
+        const editElement = (ev, id) => {
+            ev.preventDefault()
+            fetch(`/api/categorias/${id}`)
+                .then(data => data.json().then(
+                    ele => {
+                        idElemento = id
+                        modo = 'edit'
+                        elemento = ele
+                        agregaForm()
+                    }
+                )
+            )
+        }
+        const deleteElement = (ev, id) => {
+            ev.preventDefault()
+            if (!confirm('¿Seguro?')) return
+            fetch(`/api/categorias/${id}`, { method: 'DELETE' })
+                .then(() => traePagina(pagina))
+                .catch((error) => console.error("Error:", error))
+        }
+        const muestraBotones = () => {
+            $("#btnsPager").show()
+            $('#btnAdd').show()
+        }
+        const ocultaBotones = () => {
+            $("#btnsPager").hide()
+            $('#btnAdd').hide()
+        }
         $('.page-link').click(ev => traePagina(+ev.target.value - 1))
-        traePagina(@ViewBag.page)
+        const agregaForm = () => {
+            let form = $('<form id="miForm"></form>')
+            $(`<div class="row mb-3">
+                <label class="form-label col-md-2" for="Name">Nombre</label>
+                <input class="col-md-10 form-control text-box single-line" id="Name" name="Name" type="text" value="${elemento.Name}" required maxlength="50" >
+            </div>`).appendTo(form)
+            let btnEnviar = $('<button type="button" class="btn btn-link">Enviar</button>')
+                .on({
+                    click: () => {
+                        elemento.Name = $('#Name').val()
+                        fetch(`/api/categorias${modo == 'add' ? '' : ('/' + idElemento)}`, {
+                            method: modo == 'add' ? 'POST' : 'PUT',
+                            body: JSON.stringify(elemento),
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        })
+                        .then(() => traePagina(pagina))
+                        .catch((error) => console.error("Error:", error))
+                    }
+                })
+            let btnVolver = $('<button type="button" class="btn btn-link">Volver</button>')
+                .on({ click: () => traePagina(pagina) })
+            form.append($('<p></p>').append(btnEnviar, btnVolver))
+            $("#ajaxRslt").html(form)
+            ocultaBotones()
+        }
+        $('#btnAdd').click(() => {
+            idElemento = null
+            modo = 'add'
+            elemento = { ProductCategoryID: 0, Name: '' }
+            agregaForm()
+        })
+
+        traePagina(pagina)
     </script>
 
 }

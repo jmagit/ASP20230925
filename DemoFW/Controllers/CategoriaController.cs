@@ -14,7 +14,7 @@ namespace DemoFW.Controllers
         public ActionResult Index()
         {
             ViewBag.page = 0;
-            ViewBag.size = 2;
+            ViewBag.size = 3;
             ViewBag.numPages = 2;
             return View();
         }

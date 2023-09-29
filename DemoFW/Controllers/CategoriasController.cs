@@ -67,6 +67,7 @@ namespace DemoFW.Controllers {
 
             var newItem = db.ProductCategories.Add(Categoria.from(productCategory));
             newItem.ModifiedDate = DateTime.Now;
+            newItem.rowguid = Guid.NewGuid();
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = newItem.ProductCategoryID }, Categoria.from(newItem));
@@ -85,6 +86,7 @@ namespace DemoFW.Controllers {
 
             var newItem = Categoria.from(productCategory);
             newItem.ModifiedDate = DateTime.Now;
+            newItem.rowguid = Guid.NewGuid();
             db.Entry(newItem).State = EntityState.Modified;
 
             try {
