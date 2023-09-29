@@ -214,6 +214,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AW.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Calculadora.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>AW.tt</DependentUpon>
     </Compile>
